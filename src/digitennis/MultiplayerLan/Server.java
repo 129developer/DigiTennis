@@ -21,36 +21,7 @@ public class Server {
     static byte[] ary;
     static Socket s;
     static ObjectOutputStream out;
-
-    public static void main(String[] args) {
-        try {
-            ss = new ServerSocket(Integer.parseInt(Constants.LAN_PORT));
-            Socket s;//establishes connection
-            s = ss.accept();
-            s.setKeepAlive(true);
-            DataInputStream dis = new DataInputStream(s.getInputStream());
-
-//            DataOutputStream outStr = new DataOutputStream(s.getOutputStream());
-            int i = 0;
-            while (true) {
-
-//                s.getOutputStream().write(digitennis.DIGITennis.getSendData());
-                s.getOutputStream().flush();
-//            s.getOutputStream().close();
-//                outStr.write(ScreenCapturer.captureScreen());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-//            System.out.println(e);
-        } finally {
-            try {
-                ss.close();
-            } catch (IOException ex) {
-//                Logger.getLogger(MyServer.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }
+    static ObjectInputStream in;
 
     public static void startServer() {
         try {
@@ -58,25 +29,17 @@ public class Server {
             s = ss.accept();
             s.setKeepAlive(true);
             out = new ObjectOutputStream(s.getOutputStream());
-            int i = 0;
+            in = new ObjectInputStream(s.getInputStream());
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        finally {
-//            try {
-//                ss.close();
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//
-//        }
     }
 
     public static void SendData(String obj) {
         try {
-            System.out.println("Sending :" + obj);
             out.writeObject(obj);
             out.flush();
+            digitennis.DIGITennis.setReceivedData((String) in.readObject());
         } catch (Exception e) {
             e.printStackTrace();
         }

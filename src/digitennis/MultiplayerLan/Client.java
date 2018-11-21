@@ -25,12 +25,12 @@ public class Client {
             s = new Socket(ip, 5555);
             s.setKeepAlive(true);
             ObjectInputStream in = new ObjectInputStream(s.getInputStream());
-            int i = 0;
-            String a = "";
+            ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
             String obj;
             while (true) {
                 obj = (String) in.readObject();
                 digitennis.DIGITennis.setReceivedData(obj);
+                out.writeObject(digitennis.DIGITennis.getSendData());
             }
         } catch (Exception e) {
             e.printStackTrace();

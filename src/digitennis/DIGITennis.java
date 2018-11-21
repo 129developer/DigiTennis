@@ -54,11 +54,18 @@ public class DIGITennis {
         sc = new Screen();
         g2d = (Graphics2D) sc.getGraphics();
         if (Constants.IS_LAN && dt.is_Client) {
+            new Thread(new Runnable() {
 
-            Client.startClient(Constants.SERVER_IP);
+                @Override
+                public void run() {
+                    Client.startClient(Constants.SERVER_IP);
+                }
+            }).start();
+
 
         }
         runner = new Thread(new Runnable() {
+
             @Override
             public void run() {
                 drawDashBoard(g2d);
@@ -95,18 +102,17 @@ public class DIGITennis {
                     }
                 }
             }
-        }
-        );
-        new Timer()
-                .scheduleAtFixedRate(new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (RUNNING) {
-                            addNewPowerUps();
-                        }
-                    }
-                },
-                        5 * 1000, 10 * 1000);
+        });
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                if (RUNNING) {
+                    addNewPowerUps();
+                }
+            }
+        },
+                5 * 1000, 10 * 1000);
         is_Initialized = true;
 
         startGame();
@@ -213,36 +219,35 @@ public class DIGITennis {
                 JSONObject batA = new JSONObject();
                 JSONObject batB = new JSONObject();
                 JSONObject ball = new JSONObject();
+                if (is_Client) {
+                    batB.put("x", bat_b.getX());
+                    batB.put("y", bat_b.getY());
+                    batB.put("xvel", bat_b.getxVel());
+                    batB.put("yvel", bat_b.getyVel());
+                    batB.put("pwrspd", bat_b.getPOWER_SPEED());
+                    batB.put("width", bat_b.getWidth());
+                    batB.put("height", bat_b.getHeight());
+                    batB.put("name", bat_b.getName());
+                    obj.put("batb", batB);
+                } else {
+                    ball.put("x", myball.getX());
+                    ball.put("y", myball.getY());
+                    ball.put("xvel", myball.getxVel());
+                    ball.put("yvel", myball.getyVel());
+                    ball.put("movedown", myball.isMOVEDOWN());
+                    ball.put("moveright", myball.isMOVERIGHT());
 
-                batA.put("x", bat_a.getX());
-                batA.put("y", bat_a.getY());
-                batA.put("xvel", bat_a.getxVel());
-                batA.put("yvel", bat_a.getyVel());
-                batA.put("pwrspd", bat_a.getPOWER_SPEED());
-                batA.put("width", bat_a.getWidth());
-                batA.put("height", bat_a.getHeight());
-                batA.put("name", bat_a.getName());
-
-                batB.put("x", bat_b.getX());
-                batB.put("y", bat_b.getY());
-                batB.put("xvel", bat_b.getxVel());
-                batB.put("yvel", bat_b.getyVel());
-                batB.put("pwrspd", bat_b.getPOWER_SPEED());
-                batB.put("width", bat_b.getWidth());
-                batB.put("height", bat_b.getHeight());
-                batB.put("name", bat_b.getName());
-
-                ball.put("x", myball.getX());
-                ball.put("y", myball.getY());
-                ball.put("xvel", myball.getxVel());
-                ball.put("yvel", myball.getyVel());
-                ball.put("movedown", myball.isMOVEDOWN());
-                ball.put("moveright", myball.isMOVERIGHT());
-
-                obj.put("bata", batA);
-                obj.put("batb", batB);
-                obj.put("ball", ball);
-
+                    batA.put("x", bat_a.getX());
+                    batA.put("y", bat_a.getY());
+                    batA.put("xvel", bat_a.getxVel());
+                    batA.put("yvel", bat_a.getyVel());
+                    batA.put("pwrspd", bat_a.getPOWER_SPEED());
+                    batA.put("width", bat_a.getWidth());
+                    batA.put("height", bat_a.getHeight());
+                    batA.put("name", bat_a.getName());
+                    obj.put("bata", batA);
+                    obj.put("ball", ball);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -254,42 +259,37 @@ public class DIGITennis {
         if (is_Initialized) {
             try {
                 JSONObject obj = new JSONObject(str);
-                JSONObject batA = obj.getJSONObject("bata");
-                JSONObject batB = obj.getJSONObject("batb");
-                JSONObject ball = obj.getJSONObject("ball");
+                if (!is_Client) {
+                    JSONObject batB = obj.getJSONObject("batb");
+                    bat_b.setX(batB.getInt("x"));
+                    bat_b.setY(batB.getInt("y"));
+                    bat_b.setxVel(batB.getInt("xvel"));
+                    bat_b.setyVel(batB.getInt("yvel"));
+                    bat_b.setWidth(batB.getInt("width"));
+                    bat_b.setHeight(batB.getInt("height"));
+                    bat_b.setPOWER_SPEED(batB.getInt("pwrspd"));
+                } else {
+                    JSONObject batA = obj.getJSONObject("bata");
+                    JSONObject ball = obj.getJSONObject("ball");
+                    myball.setX(ball.getInt("x"));
+                    myball.setY(ball.getInt("y"));
+                    myball.setxVel(ball.getInt("xvel"));
+                    myball.setyVel(ball.getInt("yvel"));
+                    myball.setMOVEDOWN(ball.getBoolean("movedown"));
+                    myball.setMOVERIGHT(ball.getBoolean("moveright"));
 
-                myball.setX(ball.getInt("x"));
-                myball.setY(ball.getInt("y"));
-                myball.setxVel(ball.getInt("xvel"));
-                myball.setyVel(ball.getInt("yvel"));
-                myball.setMOVEDOWN(ball.getBoolean("movedown"));
-                myball.setMOVERIGHT(ball.getBoolean("moveright"));
-
-                bat_a.setX(batA.getInt("x"));
-                bat_a.setY(batA.getInt("y"));
-                bat_a.setxVel(batA.getInt("xvel"));
-                bat_a.setyVel(batA.getInt("yvel"));
-                bat_a.setWidth(batA.getInt("width"));
-                bat_a.setHeight(batA.getInt("height"));
-                bat_a.setPOWER_SPEED(batA.getInt("pwrspd"));
-
-//                batB.put("x", bat_b.getX());
-//                batB.put("y", bat_b.getY());
-//                batB.put("xvel", bat_b.getxVel());
-//                batB.put("yvel", bat_b.getyVel());
-//                batB.put("pwrspd", bat_b.getPOWER_SPEED());
-//                batB.put("width", bat_b.getWidth());
-//                batB.put("height", bat_b.getHeight());
-//                batB.put("name", bat_b.getName());
-//                ball.put("x", bat_b.getX());
-//                ball.put("y", bat_b.getY());
-//                ball.put("xvel", bat_b.getxVel());
-//                ball.put("yvel", bat_b.getyVel());
+                    bat_a.setX(batA.getInt("x"));
+                    bat_a.setY(batA.getInt("y"));
+                    bat_a.setxVel(batA.getInt("xvel"));
+                    bat_a.setyVel(batA.getInt("yvel"));
+                    bat_a.setWidth(batA.getInt("width"));
+                    bat_a.setHeight(batA.getInt("height"));
+                    bat_a.setPOWER_SPEED(batA.getInt("pwrspd"));
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
     }
-
 }
