@@ -45,8 +45,13 @@ public class powerUp {
     private void doAction() {
         switch (action) {
             case ADD_BALL_SPEED:
-                DIGITennis.myball.setxVel(DIGITennis.myball.getxVel() * 2);
-                DIGITennis.myball.setyVel(DIGITennis.myball.getyVel() * 2);
+                if (DIGITennis.myball.getxVel() > 1 && DIGITennis.myball.getyVel() > 1) {
+                    DIGITennis.myball.setxVel(DIGITennis.myball.getxVel() * 2);
+                    DIGITennis.myball.setyVel(DIGITennis.myball.getyVel() * 2);
+                } else {
+                    DIGITennis.myball.setxVel(2);
+                    DIGITennis.myball.setyVel(2);
+                }
                 break;
             case ADD_BAT_SPEED:
                 myBat.setPOWER_SPEED(myBat.getPOWER_SPEED() + Constants.BAT_POWER_SPEED_VAL);
@@ -55,8 +60,14 @@ public class powerUp {
                 myBat.setHeight(myBat.getHeight() + 20);
                 break;
             case REDUCE_BALL_SPEED:
-                DIGITennis.myball.setxVel(DIGITennis.myball.getxVel() / 2);
-                DIGITennis.myball.setyVel(DIGITennis.myball.getyVel() / 2);
+                if (DIGITennis.myball.getxVel() > 1 && DIGITennis.myball.getyVel() > 1) {
+                    DIGITennis.myball.setxVel(DIGITennis.myball.getxVel() / 2);
+                    DIGITennis.myball.setyVel(DIGITennis.myball.getyVel() / 2);
+                } else {
+                    DIGITennis.myball.setxVel(2);
+                    DIGITennis.myball.setyVel(2);
+                }
+
                 break;
 
             default:

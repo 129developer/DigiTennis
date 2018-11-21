@@ -40,6 +40,9 @@ public class bat {
         } else if (this.x + xVel - 5 > Constants.WINDOW_WIDTH / 2) {
             this.x += xVel;
         }
+        if (this.y + height + yVel < Constants.WINDOW_HEIGHT && this.y + yVel > Constants.TITLEBARHEIGHT_HEIGHT) {
+            this.y += yVel;
+        }
     }
 
     private void setColor(Color color) {
@@ -62,14 +65,14 @@ public class bat {
                 yVel = Constants.BAT_MOVESPEED + POWER_SPEED;
                 break;
             case MOVE_UP:
-                yVel = -Constants.BAT_MOVESPEED + POWER_SPEED;
+                yVel = -Constants.BAT_MOVESPEED - POWER_SPEED;
                 break;
             case STOP_ACTION:
                 yVel = 0;
                 xVel = 0;
                 break;
             case MOVE_LEFT:
-                xVel = -Constants.BAT_MOVESPEED + POWER_SPEED;
+                xVel = -Constants.BAT_MOVESPEED - POWER_SPEED;
                 break;
             case MOVE_RIGHT:
                 xVel = Constants.BAT_MOVESPEED + POWER_SPEED;
@@ -126,4 +129,21 @@ public class bat {
     public void setY(int y) {
         this.y = y;
     }
+
+    public int getxVel() {
+        return xVel;
+    }
+
+    public void setxVel(int xVel) {
+        this.xVel = xVel;
+    }
+
+    public int getyVel() {
+        return yVel;
+    }
+
+    public void setyVel(int yVel) {
+        this.yVel = yVel;
+    }
+
 }

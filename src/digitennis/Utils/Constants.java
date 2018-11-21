@@ -24,10 +24,15 @@ public class Constants {
     public static final int BAT_MOVESPEED = 5;
     public static final int TITLEBARHEIGHT_HEIGHT = 125;
     public static final int SLEEPTIME = 30;
-    public static final int WIN_SCORE = 5;
+    public static int WIN_SCORE = 5;
+    public static String LAN_PORT = "5555";
+    public static String SERVER_IP = "";
     public static final int GRAVITY = 3;
     public static final int BAT_POWER_SPEED_VAL = 2;
 
-    public static final String Title = "DiGi Tennis";
+    public static String PLAYER_A_NAME = "Player A";
+    public static boolean IS_LAN = true;
+    public static String PLAYER_B_NAME = "Player B";
+    public static final String TITLE = "DiGi Tennis";
     public static final Color BG_COLOR = Color.white;
 }

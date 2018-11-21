@@ -26,54 +26,51 @@ public class Screen extends JFrame {
         @Override
         public void keyReleased(KeyEvent e) {
             int key = e.getKeyCode();
-
-            if (key == KeyEvent.VK_NUMPAD8 || key == KeyEvent.VK_NUMPAD2 || key == KeyEvent.VK_NUMPAD4 || key == KeyEvent.VK_NUMPAD6) {
-                DIGITennis.bat_b.action(3);
-            }
-
-            if (key == KeyEvent.VK_UP || key == KeyEvent.VK_DOWN || key == KeyEvent.VK_LEFT || key == KeyEvent.VK_RIGHT) {
+            if (key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_A || key == KeyEvent.VK_D) {
                 DIGITennis.bat_a.action(3);
             }
-
+            if (key == KeyEvent.VK_UP || key == KeyEvent.VK_DOWN || key == KeyEvent.VK_LEFT || key == KeyEvent.VK_RIGHT) {
+                DIGITennis.bat_b.action(3);
+            }
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
             if (key == KeyEvent.VK_UP) {
-                DIGITennis.bat_a.action(2);
-            }
-
-            if (key == KeyEvent.VK_DOWN) {
-                DIGITennis.bat_a.action(1);
-            }
-            if (key == KeyEvent.VK_LEFT) {
-                DIGITennis.bat_a.action(4);
-            }
-
-            if (key == KeyEvent.VK_RIGHT) {
-                DIGITennis.bat_a.action(5);
-            }
-
-            if (key == KeyEvent.VK_NUMPAD8) {
                 DIGITennis.bat_b.action(2);
             }
 
-            if (key == KeyEvent.VK_NUMPAD2) {
+            if (key == KeyEvent.VK_DOWN) {
                 DIGITennis.bat_b.action(1);
             }
-            if (key == KeyEvent.VK_NUMPAD6) {
+            if (key == KeyEvent.VK_LEFT) {
+                DIGITennis.bat_b.action(4);
+            }
+
+            if (key == KeyEvent.VK_RIGHT) {
                 DIGITennis.bat_b.action(5);
             }
 
-            if (key == KeyEvent.VK_NUMPAD4) {
-                DIGITennis.bat_b.action(4);
+            if (key == KeyEvent.VK_W) {
+                DIGITennis.bat_a.action(2);
+            }
+
+            if (key == KeyEvent.VK_S) {
+                DIGITennis.bat_a.action(1);
+            }
+            if (key == KeyEvent.VK_D) {
+                DIGITennis.bat_a.action(5);
+            }
+
+            if (key == KeyEvent.VK_A) {
+                DIGITennis.bat_a.action(4);
             }
         }
     }
 
     public Screen() throws HeadlessException {
-        this(Constants.Title);
+        this(Constants.TITLE);
         addKeyListener(new TAdapter());
     }
 

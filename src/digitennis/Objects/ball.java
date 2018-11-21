@@ -95,4 +95,36 @@ public class ball {
         this.yVel = yVel;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public boolean isMOVERIGHT() {
+        return MOVERIGHT;
+    }
+
+    public void setMOVERIGHT(boolean MOVERIGHT) {
+        this.MOVERIGHT = MOVERIGHT;
+    }
+
+    public boolean isMOVEDOWN() {
+        return MOVEDOWN;
+    }
+
+    public void setMOVEDOWN(boolean MOVEDOWN) {
+        this.MOVEDOWN = MOVEDOWN;
+    }
+
 }
